@@ -1,0 +1,54 @@
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin home page</title>
+    <link rel="stylesheet" href="{% static "css/home_pages.css" %}">
+    <style>
+        {% load static %}
+        body {
+            background: url("{% static 'images/background.jpg' %}");
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <div class="navbar">
+            <a href="#"> Profile </a>
+            <a href="{% url "AdminList" %}">Books</a>
+            <a href="Top10.html"> Top 10 </a>            
+            <a href="#"> Users </a>
+            <a href="Services.html">Services</a>
+            <a href=".html">About US</a>
+            <a href="Blog.html">Blog</a>
+            <a href="FAQ.html">FAQ</a>
+            <a href="{% url 'AddBook' %}">Add Books</a>
+            <a class="logout-btn" style="margin-left: 30%;">Log out</a>
+
+        </div>
+    </center>
+    <br><br><br><br><br>
+
+    <p class="header">
+        Home
+    </p>
+    <br><br><br><br>
+    <p class="Q1">
+        “There is NO friends as LOYAL as a book.”
+    </p>
+    <form action="" method="get" class="search-bar">
+        <input type="text" placeholder="Search here ......">
+        <button type="submit"><img src="{% static "images/search.png" %}"></button>
+    </form>
+    <script src="{% static "js/admin.js" %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+{%load static%}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User home page</title>
+    <link rel="stylesheet" href="{% static "css/home_pages.css" %}">
+    <style>
+        {% load static %}
+        body {
+            background: url("{% static 'images/background.jpg' %}");
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <center>
+        <div class="navbar">
+            <a href="#"> Profile </a>
+            <a href="Top10.html"> Top 10 </a>
+            <a href="{% url "UserList" %}">Books</a>
+            <a href="{% url "BorrowedBooks" %}"> My Books </a> 
+            <a href="Services.html">Services</a>
+            <a href="Blog.html">Blog</a>
+            <a href=".html">About US</a>
+            <a href="FAQ.html">FAQ</a>
+            <a class="logout-btn" style="margin-left: 38%;">Log out</a>
+        </div>
+    </center>
+    <br><br><br><br><br>
+    <p class="header">
+        Home
+    </p>
+    <br><br>
+    <p class="Q1">
+        “A reader lives a thousand lives before he dies.”
+    </p>
+    <form action="" method="get" class="search-bar">
+        <input type="text" placeholder="Search here ......">
+        <button type="submit"><img src={% static "images/search.png" %}></button>
+    </form>
+    <script src="{% static "js/user.js" %}"></script>
+</body>
+
+</html>

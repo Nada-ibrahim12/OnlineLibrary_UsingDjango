@@ -1,0 +1,144 @@
+/* .nav {
+    position: absolute;
+    right: 10px;
+    color: #fff;
+    padding: 5px 10px;
+    text-decoration: none;
+
+
+}
+
+.navbar {
+    text-align: center;
+    position: fixed;
+    padding: 15px;
+    top: 0;
+    width: 100%;
+    background-color: #323727;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar a:hover {
+    background-color: #555;
+}
+
+.navbar a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    text-align: center;
+    margin-right: 15px;
+}
+
+.navbar a:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.4s ease;
+}
+
+.navbar a:hover:after {
+    width: 100%;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+body {
+    background-color: #F1F0E2;
+}
+
+.header {
+    text-align: center;
+    font-family: "DM Serif Display", serif;
+    font-weight: 400;
+    font-style: normal;
+    text-shadow: 5px 5px 5px gray;
+    margin-top: 70px;
+    margin-bottom: 50px;
+    color: #323727;
+}
+
+.image {
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    box-shadow: 5px 5px 5px 3px #999897;
+}
+
+.name {
+    margin-top: 5px;
+    text-align: center;
+    font-family: "EB Garamond", serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 25px;
+    text-shadow: 5px 5px 5px gray;
+} */
+
+.input {
+    background-color: #E7EAE4;
+    border-radius: 15px;
+    border-color: #535B44;
+    box-shadow: 5px 5px #999;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border-width: 3px;
+    transition: all 0.5s;
+}
+
+.input:hover {
+    background-color: #A5AD97;
+    color: #fff;
+}
+
+.input:focus {
+    background-color: #BBC1AF;
+}
+/* 
+button {
+    background-color: #D7DDD3;
+    border-radius: 15px;
+    border-color: #535B44;
+    box-shadow: 5px 5px #999;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-right: 20px;
+    margin-left: 20px;
+    text-align: center;
+    color: #535B44;
+    font-size: 15px;
+    transition: all 0.5s;
+}
+
+button:hover {
+    background-color: #A5AD97;
+    color: #fff;
+} */
+
+/* .center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    margin: 10px 10px;
+} */
+
+.selected {
+    font-size: 20px;
+}
+
+label {
+    font-size: 20px;
+    font-weight: bold;
+}

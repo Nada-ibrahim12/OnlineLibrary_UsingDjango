@@ -1,0 +1,256 @@
+body {
+    background-color: #f3eeec;
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    width: 140px;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 100px;
+    background-color: #474442;
+    color: white;
+    cursor: pointer;
+    padding: 8px;
+    font-size: 15px;
+    border: 0px solid #000000;
+}
+
+button:hover {
+    background-color: #353432;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #474442;
+    z-index: 1000;
+    padding: 1.5%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar a:hover {
+    background-color: #353432;
+}
+
+.navbar a {
+    color: white;
+    padding: 1.25% 1.2%;
+    text-decoration: none;
+    text-align: center;
+    margin-right: 1.5%;
+    font-size: 110%;
+}
+
+.navbar a:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.4s ease;
+}
+
+.navbar a:hover:after {
+    width: 100%;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+.page {
+    max-width: 75%;
+    margin: 20px auto;
+    margin-top: 4.5%;
+    padding: 2%;
+    background-color: #fff;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(15, 15, 14, 0.412);
+}
+
+.header {
+    text-align: center;
+    font-size: 400%;
+    margin-top: 1%;
+    margin-bottom: 4%;
+    font-family: 'Broadway';
+    color: #353332;
+
+}
+
+select,
+input[type="text"] {
+    padding: 1%;
+    font-size: 100%;
+    border: 1px solid #000000;
+    /* margin-bottom: 1%; */
+    border-radius: 4px;
+}
+
+.image-container {
+    max-height: 540px;
+    overflow-y: auto;
+    padding: 20px 0;
+    background-color: #f3eeec;
+    border-radius: 40px;
+    box-shadow: 0 0 10px #55504da1;
+
+}
+
+.image-container img {
+    display: block;
+    height: 300px;
+    max-width: 200px;
+    position: sticky;
+    margin-top: 1%;
+    /* margin-left: 10px; */
+}
+
+
+.image-container p {
+    /* margin-left: 5px; */
+    margin-top: 8%;
+    max-width: 100%;
+
+}
+
+
+.link {
+    position: relative;
+    display: inline-block;
+    margin-right: 50px;
+    margin-left: 60px;
+    margin-bottom: 220px;
+}
+
+
+.caption {
+    position: absolute;
+    width: 300px;
+    top: 0;
+    left: 0;
+    background-color: #f3eeecb5;
+    padding: 10px;
+    font-size: 17px;
+    color: black;
+    display: none;
+}
+
+.link:hover .caption {
+    display: block;
+}
+
+.link .description {
+    position: absolute;
+    top: 348px;
+    width: 180px;
+    margin-top: 0px;
+    padding-top: 0px;
+    border-top: 10px;
+    padding-left: 5px;
+    padding-bottom: 20px;
+    color: #474442;
+    border-radius: 10px;
+    padding-right: 5px;
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.362); */
+}
+
+
+.date {
+    color: #454341b4;
+    font-size: 12px;
+}
+
+.search-bar {
+    max-width: 400px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    border-radius: 60px;
+    padding: 10px 20px;
+    background-color: #f3eeec;
+    margin-top: 0px;
+    box-shadow: 0 0 10px #5d5957;
+}
+
+.search-bar input {
+    background: transparent;
+    flex: 1;
+    border: 0;
+    outline: none;
+    padding: 24px 20px;
+    font-size: 20px;
+    color: #4f4c4a;
+}
+
+.search-bar button img {
+    width: 20px;
+}
+
+.search-bar button {
+    border: 0;
+    border-radius: 50%;
+    width: 10%;
+    height: 210%;
+    background: #474442;
+    cursor: pointer;
+}
+
+#Category {
+    border-radius: 60px;
+    margin-bottom: 10px;
+    background-color: #f3eeec;
+    box-shadow: 0 0 10px #5d5957;
+    border: 0;
+
+
+
+}
+.name {
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.rate {
+    font-size: 15px;
+    padding-top: 5px;
+    font-family: serif;
+}
+
+.ratings-wrapper {
+    display: inline-block;
+    padding: 0 10px;
+}
+.ratings {
+    display: flex;
+    flex-direction: row-reverse;
+}
+.ratings span {
+    cursor: pointer;
+    transition: color .2s, transform .2s;
+    font-size: 20px;
+}
+.ratings span:hover {
+    color: rgb(233, 167, 45);
+    transform: scale(1.3);
+}
+.ratings span:hover ~ span {
+    color: rgb(233, 167, 45);
+}
+
+.ratings span[data-clicked]{
+    color: rgb(233, 167, 45);
+}
+.ratings span[data-clicked] ~span {
+    color: rgb(233, 167, 45);
+}
+.book {
+    display: inline-block; /* Or use display: flex; */
+    width: calc(33.33% - 20px); /* Adjust width as needed */
+    margin: 10px; /* Adjust margin as needed*/
+    vertical-align: top; /* Ensures alignment at the top */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}

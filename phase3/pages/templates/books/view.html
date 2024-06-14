@@ -1,0 +1,153 @@
+{% load static %}
+
+<html>
+
+<head>
+    <title>Book details</title>
+    <meta name="description" content="All details you need to know about Sacred Hearts Rising" />
+    <link rel="stylesheet" href="{% static "CSS/Pages_a.css" %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- jQuery Library -->
+
+</head>
+
+<header class="app-bar">
+</header>
+<br><br>
+
+<body>
+    <center>
+        <div class="navbar">
+            <a href="{% url "AdminHome" %}">Home</a>
+            <a href="#">Profile</a>
+            <a href="{% url "AdminList"%}"> Books</a>
+            <a href="{% url 'AddBook' %}">Add Books</a>
+            <a href="Services.html">Services</a>
+            <a href="Blog.html">Blog</a>
+            <a href="FAQ.html">FAQ</a>
+            <a class="logout-btn" style="margin-left: 35%;">Log out</a>
+        </div>
+    </center>
+    <div align="center" id="tbody">
+        <div class="container" id="container">
+            <h1>{{ books.bName }}</h1>
+            <img src="{{ books.bCoverImage.url }}">
+            <h2>Author: <span id="author">{{ books.bAuthor }}</span></h2>
+            <h3>Genre: <span id="genre">{{ books.bCategory }}</span></h3>
+            <div class="synopsis-container">
+                <h4>Synopsis</h4>
+                <div id="description" class="description">{{ books.bDescription }}</div>
+            </div>
+            <br>
+            <button id="editButton">Edit</button>
+            <button id="delete" data-book-id="{{ books.id }}">Delete</button>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#delete').click(function() {
+                var bookIdToDelete = $(this).data('book-id');
+                if (confirm("Do you want to delete book?")) {
+                    $.ajax({
+                        url: "/delete_book/", // Correct URL for delete_book endpoint
+                        type: "POST",
+                        data: {
+                            'book_id': bookIdToDelete,
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'
+                        },
+                        success: function(response) {
+                            alert("Book deleted successfully");
+                            window.location.replace("View_list_admin.html");
+                        },
+                        error: function(xhr, status, error) {
+                            alert("An error occurred while trying to delete the book.");
+                            console.log(xhr.responseText);
+                        }
+                    });
+                } else {
+                    alert("Operation has been canceled");
+                }
+            });
+        });
+    </script>
+
+    <script>
+    $(document).ready(function() {
+    $('#editButton').click(function() {
+        // Get the current book details
+        var authorSpan = $('#author');
+        var genreSpan = $('#genre');
+        var descriptionDiv = $('#description');
+
+        var authorText = authorSpan.text();
+        var genreText = genreSpan.text();
+        var descriptionText = descriptionDiv.text();
+
+        // Replace spans with input fields for editing
+        authorSpan.replaceWith('<input type="text" id="newAuthorInput" value="' + authorText + '">');
+        genreSpan.replaceWith('<input type="text" id="newGenreInput" value="' + genreText + '">');
+        descriptionDiv.replaceWith('<textarea id="newDescriptionTextarea">' + descriptionText + '</textarea>');
+
+        // Change the button to "Save" mode
+        $(this).text('Save');
+
+        // Set up click event for the "Save" button
+        $(this).off('click').click(function() {
+            // Get the new values
+            var newAuthor = $('#newAuthorInput').val();
+            var newGenre = $('#newGenreInput').val();
+            var newDescription = $('#newDescriptionTextarea').val();
+            var bookId = "{{ books.id }}"; // Replace with the actual book ID retrieval method
+
+            // AJAX request to update book details
+            $.ajax({
+                type: "POST",
+                url: "{% url 'update_book' %}", // Replace with the actual URL for updating a book
+                data: {
+                    'book_id': bookId,
+                    'new_author': newAuthor,
+                    'new_genre': newGenre,
+                    'new_description': newDescription,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    // Update the book details on the page
+                    $('#author').text(newAuthor);
+                    $('#genre').text(newGenre);
+                    $('#description').text(newDescription);
+
+                    // Restore the "Edit" mode
+                    $('#editButton').text('Edit').off('click').click(function() {
+                        // Re-enable the edit functionality
+                        // Here you can re-enable the edit button or re-bind the toggleEdit function
+                    });
+
+                    // Replace input fields with original text elements
+                    $('#newAuthorInput').replaceWith($('<span>').attr('id', 'author').text(newAuthor));
+                    $('#newGenreInput').replaceWith($('<span>').attr('id', 'genre').text(newGenre));
+                    $('#newDescriptionTextarea').replaceWith($('<span>').attr('id', 'description').text(newDescription));
+
+                    // Show success message
+                    alert("Book details updated successfully!");
+                    window.location.href = "{% url 'adminpage' %}"; // Replace 'admin_view_list' with the actual URL name for the admin view list page
+
+
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors
+                    alert("An error occurred while trying to update the book.");
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+    });
+});
+
+        
+    </script>
+    
+
+    <script src="{% static "JS/admin.js" %}"></script>
+</body>
+
+</html>

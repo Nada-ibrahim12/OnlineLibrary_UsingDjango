@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in</title>
+    <link rel="stylesheet" href="{% static "css/inputs.css" %}">
+    <style>
+        body {
+            background: url('{% static "images/13.jpg" %}');
+            background-size: cover; /* Adjusted to cover entire background */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            align-items: center; /* This line may not have any effect on the body tag */
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <div class="navbar">
+            <a href="{% url 'Home_page' %}">Home</a>
+            <a href="Services.html">Services</a>
+            <a href="Blog.html">Blog</a>
+            <a href="About.html">About us</a>
+            <a href="FAQ.html">FAQ</a>
+        </div>
+    </center>
+    <br><br><br>
+    <div class="login-box">
+        <div id="login-form" class="form-container">
+            <form class="form-input" id="login-form" method="POST">
+                {% csrf_token %}
+                <br>
+                <p class="header">Hello, Welcome back</p>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter the Username" required><br><br>
+                <label for="password">Password:</label> 
+                <input type="password" id="password" name="password" placeholder="Enter the Password" required><br><br>
+                <input type="checkbox" id="remember">
+                <label for="remember">Remember me</label>
+                <a href="#" style="font-size:10px; color: #000000; padding-left: 150px;">Forgot Password?</a><br><br>
+                <center>
+                    <button type="submit" class="btn" style="font-size: 20px;width: 300px; margin-left:30px;
+                         background-color:rgba(103, 146, 81, 0.197);">Log in</button>
+                    <br><br>
+                    <a href="{% url 'SignUp' %}" style="font-size:15px; color: #000000; padding-left:20px">Create new
+                        account?</a>
+                </center>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add books</title>
+    <link rel="stylesheet" href="{% static "css/inputs.css" %}">
+
+
+    <style>
+        body {
+            background: url('{% static "images/13.jpg" %}');
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            align-items: center; /* This line may not have any effect on the body tag */
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <div class="navbar">
+            <a href="{% url "AdminHome" %}">Home</a>
+            <a href="{% url "AdminList"%}"> Books</a>
+            <a href="#">Profile</a>
+            <a href="Services.html">Services</a>
+            <a href="Blog.html">Blog</a>
+            <a href="FAQ.html">FAQ</a>
+            <a class="logout-btn" style="margin-left: 45%;">Log out</a>
+        </div>
+    </center>
+    <br>
+    <div class="login-box">
+        <div class="form-container">
+            <form method="POST" id="addBookForm" action="{% url 'added' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p class="header" style="margin-left: 100px;">ADD BOOK</p>
+                <b>
+                    <label for="book_id">Book ID:</label>
+                    <input type="text" id="book_id" name="book_id" class="form-control" placeholder="Enter the Book's ID ...."
+                        required><br><br>
+
+                    <label for="book_name">Book name:</label>
+                    <input type="text" id="book_name" name="book_name" class="form-control" placeholder="Enter the Book's name ...."
+                        required><br><br>
+
+                    <label for="author">Author:</label>
+                    <input type="text" id="author" name="author" class="form-control" placeholder="Enter the name of the author ...."
+                        required><br><br>
+
+                    <label for="category">Category:</label>
+                    <input type="text" id="category" name="category" class="form-control" placeholder="Enter the category ...."
+                        required><br><br>
+
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" name="description" class="form-control"
+                        placeholder="Enter the Book's description ...." required><br><br>
+
+                    <label for="publish_date">Publish date:</label>
+                    <input type="date" name="publish_date" id="publish_date" class="form-control" required><br><br>
+                    
+                    <label for="book_image">Book Image:</label>
+                    <input type="file" id="book_image" name="book_image" class="form-control" accept="image/*"><br><br>
+
+                    <div class="form-input">
+                        <center><button
+                                style="color: black;width: 100px; font-size:20px; width:250px;background-color:rgba(103, 146, 81, 0.197);"
+                                class="btn btn-primary" type="submit">Add Book</button></center>
+                        <br><br>
+                    </div>
+                </b>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,219 @@
+{%block content%}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View list user</title>
+    <link rel="stylesheet" href="{% static "CSS/view_lists.css" %}">
+</head>
+<body>
+    <br>
+    <center>
+        <div class="navbar">
+            <a href="{% url "UserHome" %}">Home</a>
+            <a href="{% url "BorrowedBooks" %}"> My Books </a>
+            <a href="#">Profile</a>
+            <a href="Services.html">Services</a>
+            <a href="Blog.html">Blog</a>
+            <a href="FAQ.html">FAQ</a>
+            <a class="logout-btn" style="margin-left: 45%;">Log out</a>
+        </div>
+        <br>
+        <div class="page">
+            <p class="header">Books</p>
+
+            <div class="nav">
+                <select name="Category" id="Category" style="top: 207px;">
+                    <option value="All">All</option>
+                    <option value="Horror">Horror</option>
+                    <option value="Fantasy">Fantasy</option>
+                    <option value="Science Fiction">Science Fiction</option>
+                    <option value="History">History</option>
+                    <option value="Poetry">Poetry</option>
+                    <option value="Drama">Drama</option>
+                    <option value="Romance">Romance</option>
+                </select>
+                
+                
+                <form id="search-form" class="search-bar">
+                    <input id="search-input" type="text" placeholder="Search here ...">
+                    <ul id="suggestionsList"></ul> <!-- Suggestions will be displayed here -->
+                    <button type="submit"><img src="{% static "images/search.png" %}"></button>
+                </form>
+            
+            </div>
+            <br><br>
+            <div class="image-container">
+                <br>
+                <div id="books-container" class="books-container">
+                    {% for book in books %}
+                    <div class="link">
+                        <br>
+                        <img src="{{ book.bCoverImage.url }}">
+                        <p class="caption" value="{{ book.bCategory }}">{{ book.bName }}</p>
+                        <div class="description">
+                            <div class="name">{{ book.bName }}</div>
+                            <div class="author">Author: {{ book.bAuthor }}</div>
+                            <div class="rate">Rating:
+                                <div class="ratings-wrapper">
+                                    <div data-productid="#" class="ratings">
+                                        <span data-ratings="5">&#9733;</span>
+                                        <span data-ratings="4">&#9733;</span>
+                                        <span data-ratings="3">&#9733;</span>
+                                        <span data-ratings="2">&#9733;</span>
+                                        <span data-ratings="1">&#9733;</span>
+                                    </div>
+                                </div>
+                            </div> 
+                            <br>
+                            <li class="date">Publish Date: {{ book.bPublishDate }}</li>
+                            <br>
+                            <button class="viewD-button" data-book-id="{{ book.id }}">Read now</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+    </center>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var viewDButtons = document.querySelectorAll(".viewD-button");
+        
+            viewDButtons.forEach(function(button) {
+                button.addEventListener("click", function(event) {
+                    var bookId = event.target.getAttribute("data-book-id");
+                    var url = "BookDetailsUser.html?id=" + bookId; 
+                    window.location.href = url;
+                });
+            });
+        });
+        
+        const logoutBtn = document.querySelector(".logout-btn")
+
+        logoutBtn.addEventListener("click", () => {
+            window.location.replace("/")
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#search-input').on('input', function() {
+                var query = $(this).val();
+    
+                $.ajax({
+                    type: "GET",
+                    url: "/search-books/",  // Change this to the actual URL of your search_books endpoint if needed
+                    data: {
+                        'query': query,
+                    },
+                    success: function(response) {
+                        var suggestions = response.suggestions;
+                        var booksContainer = $('#books_container');
+                        booksContainer.empty();
+                        suggestions.forEach(function(book) {
+                            var bookHtml = `
+                                <div class="link">
+                                    <br>
+                                    <img src="${book.cover_image_url}" alt="${book.title} Cover Image">
+                                    <p class="caption" value="${book.category}">${book.title}</p>
+                                    <div class="description">
+                                        <div class="name">${book.title}</div>
+                                        <div class="author">Author: ${book.author}</div>
+                                        <!-- Add other details here if needed -->
+                                        <div class="rate">Rating:
+                                            <div class="ratings-wrapper">
+                                                <div data-productid="#" class="ratings">
+                                                    <span data-ratings="5">&#9733;</span>
+                                                    <span data-ratings="4">&#9733;</span>
+                                                    <span data-ratings="3">&#9733;</span>
+                                                    <span data-ratings="2">&#9733;</span>
+                                                    <span data-ratings="1">&#9733;</span>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <br>
+                                        <!-- You can add more details like publish date, etc. -->
+                                        <button class="viewD-button" data-book-id="${ book.id }">View Details</button>
+                                    </div>
+                                </div>
+                            `;
+                            booksContainer.append(bookHtml);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("An error occurred while searching.");
+                    }
+                });
+            });
+    
+            // Prevent form submission on Enter key press
+            $('#search-form').submit(function(event) {
+                event.preventDefault(); 
+            });
+        });
+    </script>
+    <script>
+    $(document).ready(function() {
+        $('#Category').change(function() {
+            var selectedCategory = $(this).val();
+            var queryData = {};
+            if (selectedCategory !== 'All') {
+                queryData.category = selectedCategory;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "/filter-books/",  
+                data: queryData,
+                success: function(response) {
+                    var books = response.books;
+                    var booksContainer = $('#books_container');
+                    booksContainer.empty();
+                    books.forEach(function(book) {
+                        var bookHtml = `
+                            <div class="link">
+                                <br>
+                                <img src="${book.cover_image_url}" alt="${book.title} Cover Image">
+                                <p class="caption" value="${book.category}">${book.title}</p>
+                                <div class="description">
+                                    <div class="name">${book.title}</div>
+                                    <div class="author">Author: ${book.author}</div>
+                                    <div class="rate">Rating:
+                                        <div class="ratings-wrapper">
+                                            <div data-productid="#" class="ratings">
+                                                <span data-ratings="5">&#9733;</span>
+                                                <span data-ratings="4">&#9733;</span>
+                                                <span data-ratings="3">&#9733;</span>
+                                                <span data-ratings="2">&#9733;</span>
+                                                <span data-ratings="1">&#9733;</span>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <br>
+                                    <li class="date">Publish Date: ${book.publish_date}</li>
+                                    <br>
+                                    <button class="viewD-button" data-book-id="${ book.id }">View Details</button>
+                                </div>
+                            </div>
+                        `;
+                        booksContainer.append(bookHtml);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("An error occurred while filtering books.");
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
+
+
+{%endblock content%}

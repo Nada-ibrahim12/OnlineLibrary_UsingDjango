@@ -1,0 +1,53 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+    <link rel="stylesheet" href="{% static "css/home_pages.css" %}">
+    <style>
+        {% load static %}
+        body {
+            background: url("{% static 'images/background.jpg' %}");
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <div class="navbar">
+            <a href=".html">About US</a>
+            <a href="Services.html">Services</a>
+            <a href="Blog.html">Blog</a>
+            <a href=".html">About US</a>
+            <a href="FAQ.html">FAQ</a>
+            <a href="Facebook.com"> Facebook </a>
+            <a href="Instagram.com"> Instagram</a>
+            <a href="{% url "SignUp" %}" style="margin-left:33% ;"> Register </a>
+            <a href="{% url "Login" %}"> Log in </a>
+
+        
+        </div>
+    </center>
+    <br><br><br>
+    <p class="header">
+        Welcome to our <br>library !
+    </p>
+    <br>
+    <p class="Q1">
+        "Books are the quietest and most constant <br>
+        of friends; they are the most accessible and wisest of <br> counselors,
+        and the most patient of teachers." <br>- Charles William Eliot
+    </p>
+    <form action="" method="get" class="search-bar">
+        <input type="text" placeholder="Search here ......">
+        <button type="submit"><img src="{% static "images/search.png" %}"></button>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,186 @@
+{% load static %}
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View borrowed books</title>
+    <link rel="stylesheet" href="{% static 'CSS/view_lists.css' %}" />
+    <style>
+      li{
+        list-style: none;
+      }
+      .return-button{
+        margin-top: 65%;
+      }
+      .books-container{
+        width: 150px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <br />
+    <center>
+      <div class="navbar">
+        <a href="{% url 'UserHome' %}">Home</a>
+        <a href="#">Profile</a>
+        <a href="{% url 'UserList' %}">Books</a>
+        <a href="Services.html">Services</a>
+        <a href="Blog.html">Blog</a>
+        <a href="FAQ.html">FAQ</a>
+        <a class="logout-btn" style="margin-left: 45%;">Log out</a>
+      </div>
+    </center>
+    <br />
+
+    <div class="page">
+      <p class="header">My Borrowed Books</p>
+      <div class="nav">
+        <center>
+          <select name="Category" id="Category" style="top: 207px;">
+            <option value="1">All</option>
+            <option value="2">Horror</option>
+            <option value="3">Fantasy</option>
+            <option value="4">Science Fiction</option>
+            <option value="5">History</option>
+            <option value="6">Poetry</option>
+            <option value="7">Drama</option>
+            <option value="Romance">Romance</option>
+          </select>
+
+        <form id="search-form" class="search-bar">
+          <input id="search-input" type="text" placeholder="Search here ...">
+          <ul id="suggestionsList"></ul> <!-- Suggestions will be displayed here -->
+          <button type="submit"><img src="{% static "images/search.png" %}"></button>
+        </center>
+      </form>
+      </div>
+      <br /><br />
+      <div class="image-container">
+        <br />
+        <div id="books_container" class="books-container">
+          {% for record in borrowed_books %}
+          <div class="link">
+            <center>
+            <div class="name">Name: {{ record.book.bName }}</div>
+            <br>
+            </center>
+            <img src="{{ record.book.bCoverImage.url }}" alt="{{ record.book.bName }}" />
+            <center>
+            <div class="description">
+              <li class="borrow-duration" style="margin-top: 25% ;">Price: {{ record.price }}</li>
+              <li class="borrow-duration">Borrow Duration: {{ record.duration }}</li>
+              <li class="borrow-date">Borrow Date: {{ record.borrow_date }}</li>
+              <li class="return-date">Borrow Date: {{ record.return_date }}</li>
+            </div>
+            <button class="return-button" data-book-id="{{ book.id }}">Return</button>
+          </center>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        var viewDButtons = document.querySelectorAll(".return-button");
+    
+        viewDButtons.forEach(function(button) {
+            button.addEventListener("click", function(event) {
+           
+                event.target.innerText = "Returned";
+
+            });
+        });
+    });
+    
+      
+      const logoutBtn = document.querySelector(".logout-btn")
+
+      logoutBtn.addEventListener("click", () => {
+          window.location.replace("/")
+      })
+  </script>
+    <script>
+        $(document).ready(function() {
+            $('#search-input').on('input', function() {
+                var query = $(this).val();
+    
+                $.ajax({
+                    type: "GET",
+                    url: "/search-books/",  // Change this to the actual URL of your search_books endpoint if needed
+                    data: {
+                        'query': query,
+                    },
+                    success: function(response) {
+                        var suggestions = response.suggestions;
+                        var booksContainer = $('#books_container');
+                        booksContainer.empty();
+                        suggestions.forEach(function(book) {
+                            var bookHtml = `
+                                <img src="${ record.book.bCoverImage.url }" alt="${ record.book.name }" />
+                                <br />
+                                <p class="caption">${ record.book.name }</p>
+                                <div class="description">
+                                  <div class="name">${ record.book.name }</div>
+                                  <li class="borrow-date">Borrow Date: ${ record.borrow_date }</li>
+                                  <li class="borrow-duration">Borrow Duration: ${ record.duration }</li>
+                                </div>
+                            `;
+                            booksContainer.append(bookHtml);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("An error occurred while searching.");
+                    }
+                });
+            });
+    
+            // Prevent form submission on Enter key press
+            $('#search-form').submit(function(event) {
+                event.preventDefault(); 
+            });
+        });
+    </script>
+   <script>
+    $(document).ready(function() {
+        $('#Category').change(function() {
+            var selectedCategory = $(this).val();
+            var queryData = {};
+            if (selectedCategory !== 'All') {
+                queryData.category = selectedCategory;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "/filter-books/",  
+                data: queryData,
+                success: function(response) {
+                    var books = response.books;
+                    var booksContainer = $('#books_container');
+                    booksContainer.empty();
+                    books.forEach(function(book) {
+                      var bookHtml = `
+                      <img src="${ record.book.bCoverImage.url }" alt="${ record.book.name }" />
+                      <br /> <br>
+                      <p class="caption">${ record.book.name }</p>
+                      <div class="description">
+                        <div class="name">${ record.book.name }</div>
+                        <li class="borrow-date">Borrow Date: ${ record.borrow_date }</li>
+                        <li class="borrow-duration">Borrow Duration: ${ record.duration }</li>
+                      </div>
+                  `;
+                        booksContainer.append(bookHtml);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("An error occurred while filtering books.");
+                }
+            });
+        });
+    });
+</script>
+    <br /><br />
+  </body>
+</html>
